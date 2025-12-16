@@ -36,9 +36,9 @@
       }
       
       /* Animación de la marquesina vertical */
+      /* Se aumentó la duración para un desplazamiento más notorio */
       @keyframes marquee-scroll-vertical {
         0% { transform: translateY(0); }
-        /* Se desplaza 50% de la altura total (duplicada) para el loop */
         100% { transform: translateY(-50%); } 
       }
     }
@@ -257,8 +257,8 @@
       position:absolute;
       color:var(--red);
       opacity:.4;
-      font-size:2rem;
-      animation:float 12s linear infinite;
+      font-size:3rem; /* Símbolos coreanos más grandes */
+      animation:float 10s linear infinite; /* Animación más rápida para notar el movimiento */
     }
     @keyframes float{
       from{transform:translateY(100vh) rotate(0deg)}
@@ -268,9 +268,9 @@
     /* ESTILOS DE LA MARQUESINA DE FOTOS (VERTICAL) */
     .image-marquee {
         width: 100%;
-        height: 250px; /* Altura del contenedor de la marquesina */
+        height: 250px;
         margin: 2rem auto;
-        overflow: hidden;
+        overflow: hidden; /* Esto es crucial para que el contenido se mueva dentro */
         position: relative;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 8px;
@@ -280,18 +280,20 @@
         position: absolute;
         width: 100%;
         display: flex;
-        flex-direction: column; /* Apilar las imágenes verticalmente */
-        animation: marquee-scroll-vertical 30s linear infinite; /* Animación vertical */
+        flex-direction: column; 
+        /* Asegurar que el contenido duplicado sea el doble de la altura total */
+        height: auto; 
+        animation: marquee-scroll-vertical 30s linear infinite; 
     }
     .marquee-content img {
         width: 100%;
-        height: 250px; /* Tamaño más grande para las fotos */
-        margin-bottom: 10px; /* Espacio entre fotos */
+        height: 250px; 
+        margin-bottom: 10px; 
         border-radius: 4px;
         object-fit: cover;
         opacity: 0.95;
         transition: opacity 0.3s;
-        flex-shrink: 0; /* Evita que se encojan */
+        flex-shrink: 0; 
     }
     .marquee-content img:hover {
         opacity: 1;
@@ -307,7 +309,7 @@
         .card { padding: 2rem 1rem; max-width: 90%; }
         .card-logo-restaurante { max-width: 250px; }
         .card h2 { font-size: 1.5rem; }
-        .image-marquee { height: 180px; } /* Menos altura en móvil */
+        .image-marquee { height: 180px; } 
         .marquee-content img { height: 180px; }
         .button-group { gap: 1rem; }
     }
@@ -375,11 +377,17 @@
   </div>
 
   <script>
+    // Variable para asegurar que la marquesina solo se duplique una vez
+    let marqueeSetupComplete = false;
+    
     function openInvite(){
       document.getElementById('invitation').style.display='flex';
       createSymbols();
-      // Inicializar la marquesina
-      setupMarquee();
+      // Solo inicializamos la marquesina si no se ha hecho antes
+      if (!marqueeSetupComplete) {
+          setupMarquee();
+          marqueeSetupComplete = true;
+      }
     }
     function closeInvite(){
       document.getElementById('invitation').style.display='none';
@@ -387,6 +395,7 @@
     }
 
     function createSymbols(){
+      // Símbolos más grandes se manejan con font-size en CSS (.symbol)
       const icons=['韓','和','力','夢','福','龍','虎','★','✶','✨']; 
       const container=document.getElementById('symbols');
       container.innerHTML = ''; 
@@ -397,12 +406,12 @@
         s.textContent=icons[Math.floor(Math.random()*icons.length)];
         s.style.left=Math.random()*100+'%';
         s.style.animationDuration=(8+Math.random()*10)+'s';
-        s.style.fontSize=(18+Math.random()*30)+'px';
+        s.style.fontSize=(25+Math.random()*35)+'px'; // Aumentamos el tamaño aún más aquí
         container.appendChild(s);
       }
     }
 
-    // Función para duplicar el contenido de la marquesina (para loop infinito)
+    // Función crucial para duplicar el contenido de la marquesina y lograr el loop infinito
     function setupMarquee() {
         const marquee = document.getElementById('marqueeContent');
         // Clonar el contenido de las imágenes
@@ -427,12 +436,6 @@
             el.style.top = 100 + Math.random() * 20 + 'vh'; 
             festiveContainer.appendChild(el);
         }
-        
-        // Ejecutar setupMarquee inmediatamente en el DOMContentLoaded
-        // para que las fotos se dupliquen antes de que se abra el modal
-        // y el CSS pueda calcular la animación correctamente.
-        // Opcional, pero previene fallos si el usuario abre el modal rápido.
-        // Note: Se moverá la inicialización de setupMarquee al openInvite() para asegurar que la duplicación se haga solo una vez al abrir.
     });
   </script>
 
