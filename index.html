@@ -228,9 +228,14 @@
     .button-group {
         display: flex;
         justify-content: center;
-        gap: 1.5rem;
+        /* Reducir el gap para móvil */
+        gap: 1rem; 
         margin-top: 2rem;
-        flex-wrap: wrap;
+        /* Asegurar que el contenido no se desborde horizontalmente */
+        width: 100%;
+        padding: 0 10px; 
+        box-sizing: border-box;
+        flex-wrap: wrap; 
         z-index: 20; 
         position: relative;
     }
@@ -245,6 +250,8 @@
       transition: background 0.3s;
       text-decoration: none;
       text-align: center;
+      /* Permitir que los botones se estiren un poco en móvil si es necesario */
+      min-width: 140px; 
     }
     .close:hover, .reserve-btn:hover {
         background: rgba(212,175,55,.1);
@@ -306,14 +313,24 @@
         .card-logo-restaurante { max-width: 250px; }
         .card h2 { font-size: 1.5rem; }
         .photo-carousel { height: 180px; }
-
-        /* Ajuste para símbolos coreanos en móvil */
-        .symbol {
-            font-size: 2rem; 
-            opacity: 0.2; 
+        
+        /* Ajuste para botones en móvil para evitar recorte */
+        .button-group {
+            gap: 0.8rem;
+            flex-direction: column; /* Apilamos los botones verticalmente si la pantalla es muy estrecha */
+            align-items: center;
+            padding: 0 10px; /* Asegura espacio de los bordes */
+        }
+        .close, .reserve-btn {
+            width: 100%; /* Hacemos que los botones llenen el ancho disponible en la tarjeta */
+            max-width: 280px; 
         }
 
-        .button-group { gap: 1rem; }
+        /* Ajuste para símbolos coreanos en móvil (más grandes y visibles) */
+        .symbol {
+            font-size: 3rem; 
+            opacity: 0.4; /* Mayor opacidad */
+        }
     }
   </style>
 </head>
@@ -424,8 +441,8 @@
         s.style.left=Math.random()*100+'%';
         s.style.animationDuration=(8+Math.random()*10)+'s';
         
-        // Símbolos coreanos grandes: rango de 35px a 60px
-        s.style.fontSize=(35+Math.random()*25)+'px'; 
+        // AUMENTO FINAL: Símbolos coreanos más grandes (rango 50px a 90px)
+        s.style.fontSize=(50+Math.random()*40)+'px'; 
         
         container.appendChild(s);
       }
