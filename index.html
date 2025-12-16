@@ -11,7 +11,7 @@
       --black:#0f0f0f;
       --red:#b11226;
       --soft-gold: #e0b84c; 
-      --light-bg: #1c1c1c; /* Fondo un poco más claro para un toque festivo */
+      --light-bg: #1c1c1c; 
 
       /* Animación para el botón con efecto de fuego */
       @keyframes fire {
@@ -23,7 +23,7 @@
       /* Animación para el efecto de brillo en textos */
       @keyframes text-shine {
         0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
-        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 40px rgba(255, 215, 0, 0.7); } /* Más intenso */
+        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 40px rgba(255, 215, 0, 0.7); } 
         100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
       }
 
@@ -66,7 +66,6 @@
       overflow: hidden;
     }
     
-    /* Contenedor para elementos navideños */
     .festive-elements {
         position: absolute;
         width: 100%;
@@ -150,7 +149,7 @@
       transition:transform .3s, box-shadow .3s;
       text-transform:uppercase;
       letter-spacing:1px;
-      z-index: 10; /* Asegurar que el botón esté sobre el fuego */
+      z-index: 10;
     }
     .btn::before{
       content:"";
@@ -160,7 +159,7 @@
       width:250%;
       height:250%;
       background:radial-gradient(circle at center, rgba(255,200,0,.9), rgba(255,80,0,.7), transparent 60%);
-      animation:fire 3.5s linear infinite; /* Animación de fuego reactivada */
+      animation:fire 3.5s linear infinite; 
       transform: translate(-50%, -50%);
       filter:blur(10px);
       z-index:1;
@@ -195,7 +194,6 @@
       position:relative;
       z-index:10;
       animation: fadeInScale 0.7s ease-out forwards;
-      /* overflow: hidden; Quitamos el overflow para ver los botones */
     }
     @keyframes fadeInScale {
         from { opacity: 0; transform: scale(0.8); }
@@ -223,10 +221,10 @@
       color: #fff;
     }
     .card-logo-restaurante {
-        max-width: 350px; /* Aún más grande para resaltar */
+        max-width: 350px; /* Tamaño grande y vistoso */
         height: auto;
         margin-bottom: 2rem;
-        /* Resplandor más intenso para resaltar */
+        /* Resplandor intenso */
         filter: drop-shadow(0 0 35px rgba(255, 200, 0, 0.9)) invert(0); 
     }
     .button-group {
@@ -235,7 +233,7 @@
         gap: 1.5rem;
         margin-top: 2rem;
         flex-wrap: wrap;
-        z-index: 20; /* Asegurar que los botones estén por encima de todo */
+        z-index: 20; /* Asegurar visibilidad */
         position: relative;
     }
     .close, .reserve-btn {
@@ -286,8 +284,8 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0; /* Inicialmente ocultas */
-        transition: opacity 1s ease-in-out; /* Transición de desvanecimiento */
+        opacity: 0; 
+        transition: opacity 1s ease-in-out; /* Efecto de desvanecimiento */
     }
     .carousel-image img {
         width: 100%;
@@ -295,7 +293,7 @@
         object-fit: cover;
     }
     .carousel-image.active {
-        opacity: 1; /* La imagen activa se muestra */
+        opacity: 1; 
     }
 
 
@@ -312,8 +310,8 @@
 
         /* Ajuste para símbolos coreanos en móvil */
         .symbol {
-            font-size: 1.5rem; /* Más pequeños */
-            opacity: 0.2; /* Menos notorios */
+            font-size: 1.5rem; 
+            opacity: 0.2; 
         }
 
         .button-group { gap: 1rem; }
@@ -395,17 +393,30 @@
 
   <script>
     // ----------------------
-    // CONTROL DE SÍMBOLOS Y MODAL
+    // CONTROL DE SÍMBOLOS Y MODAL (FUNCIONES CORREGIDAS)
     // ----------------------
     function openInvite(){
-      document.getElementById('invitation').style.display='flex';
+      // 1. Mostrar la invitación (el modal)
+      const invitationElement = document.getElementById('invitation');
+      if (invitationElement) {
+          invitationElement.style.display='flex';
+      }
+
+      // 2. Crear los símbolos
       createSymbols();
-      startCarousel(); // Iniciar el carrusel al abrir la invitación
+
+      // 3. Iniciar el carrusel
+      startCarousel(); 
     }
+    
     function closeInvite(){
-      document.getElementById('invitation').style.display='none';
+      const invitationElement = document.getElementById('invitation');
+      if (invitationElement) {
+          invitationElement.style.display='none';
+      }
+      
       document.getElementById('symbols').innerHTML=''; 
-      stopCarousel(); // Detener el carrusel al cerrar
+      stopCarousel(); 
     }
 
     function createSymbols(){
@@ -432,22 +443,54 @@
     let carouselInterval;
 
     function showImage(index) {
-        // Remover 'active' de todas las imágenes
         images.forEach(img => img.classList.remove('active'));
-        // Agregar 'active' a la imagen actual
-        images[index].classList.add('active');
+        if (images[index]) {
+            images[index].classList.add('active');
+        }
     }
 
     function nextImage() {
-        // Mover al siguiente índice, si es el último, vuelve al inicio
         currentImageIndex = (currentImageIndex + 1) % images.length;
         showImage(currentImageIndex);
     }
 
     function startCarousel() {
-        // Asegurarse de que solo haya un intervalo corriendo
         stopCarousel(); 
-        // Mostrar la primera imagen (por si se ha cerrado antes)
-        showImage(0); 
-        // 1000ms = 1 segundo
-        carouselInterval = setInterval(next
+        if (images.length > 0) {
+           showImage(0); 
+           carouselInterval = setInterval(nextImage, 1000); // Cambio cada 1 segundo
+        }
+    }
+
+    function stopCarousel() {
+        clearInterval(carouselInterval);
+    }
+
+
+    // ----------------------
+    // GENERACIÓN DE ELEMENTOS FESTIVOS
+    // ----------------------
+    document.addEventListener('DOMContentLoaded', () => {
+        const festiveContainer = document.getElementById('festiveElements');
+        const elements = ['❄️', '🔔', '✨', '🌟', '🎄', '🎁']; 
+        const classes = ['snow', 'bell', 'confetti'];
+
+        for (let i = 0; i < 60; i++) {
+            const el = document.createElement('div');
+            el.className = `festive-element ${classes[Math.floor(Math.random() * classes.length)]}`;
+            el.textContent = elements[Math.floor(Math.random() * elements.length)];
+            el.style.left = Math.random() * 100 + 'vw'; 
+            el.style.animationDelay = Math.random() * -10 + 's'; 
+            el.style.top = 100 + Math.random() * 20 + 'vh'; 
+            festiveContainer.appendChild(el);
+        }
+        
+        // Muestra la primera imagen al cargar la página (estático hasta que se abre el modal)
+        if (images.length > 0) {
+            showImage(0);
+        }
+    });
+  </script>
+
+</body>
+</html>
