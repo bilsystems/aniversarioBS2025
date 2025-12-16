@@ -11,6 +11,7 @@
       --black:#0f0f0f;
       --red:#b11226;
       --soft-gold: #e0b84c; 
+      --light-bg: #1c1c1c; /* Fondo un poco más claro para un toque festivo */
 
       /* Animación para el botón con efecto de fuego */
       @keyframes fire {
@@ -22,7 +23,7 @@
       /* Animación para el efecto de brillo en textos */
       @keyframes text-shine {
         0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
-        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 40px rgba(255, 215, 0, 0.6); }
+        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 40px rgba(255, 215, 0, 0.7); } /* Más intenso */
         100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
       }
 
@@ -34,19 +35,19 @@
         75% { transform: translateY(-60vh) translateX(5vw) rotate(270deg); opacity: 0.5; }
         100% { transform: translateY(-80vh) translateX(-5vw) rotate(360deg); opacity: 0.2; }
       }
-      
-      /* Animación de la marquesina vertical */
-      /* Se aumentó la duración para un desplazamiento más notorio */
-      @keyframes marquee-scroll-vertical {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-50%); } 
+
+      /* Animación para el cambio de fotos (fade) */
+      @keyframes fade-in {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
       }
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:'Poppins',sans-serif;
-      background:radial-gradient(circle at top,var(--black),#000);
+      /* Fondo ajustado para un aspecto corporativo/festivo */
+      background:radial-gradient(circle at top, var(--light-bg), var(--black));
       color:#fff;
       overflow-x:hidden;
       min-height:100vh;
@@ -149,6 +150,7 @@
       transition:transform .3s, box-shadow .3s;
       text-transform:uppercase;
       letter-spacing:1px;
+      z-index: 10; /* Asegurar que el botón esté sobre el fuego */
     }
     .btn::before{
       content:"";
@@ -158,7 +160,7 @@
       width:250%;
       height:250%;
       background:radial-gradient(circle at center, rgba(255,200,0,.9), rgba(255,80,0,.7), transparent 60%);
-      animation:fire 3.5s linear infinite;
+      animation:fire 3.5s linear infinite; /* Animación de fuego reactivada */
       transform: translate(-50%, -50%);
       filter:blur(10px);
       z-index:1;
@@ -168,6 +170,7 @@
       transform:scale(1.05);
       box-shadow:0 20px 50px rgba(255,140,0,.7);
     }
+    
     /* Estilos para el panel de invitación */
     .invitation{
       position:fixed;
@@ -192,7 +195,7 @@
       position:relative;
       z-index:10;
       animation: fadeInScale 0.7s ease-out forwards;
-      overflow: hidden; 
+      /* overflow: hidden; Quitamos el overflow para ver los botones */
     }
     @keyframes fadeInScale {
         from { opacity: 0; transform: scale(0.8); }
@@ -220,11 +223,11 @@
       color: #fff;
     }
     .card-logo-restaurante {
-        max-width: 320px; /* Logo más grande */
+        max-width: 350px; /* Aún más grande para resaltar */
         height: auto;
         margin-bottom: 2rem;
         /* Resplandor más intenso para resaltar */
-        filter: drop-shadow(0 0 25px rgba(255, 200, 0, 0.8)) invert(0); 
+        filter: drop-shadow(0 0 35px rgba(255, 200, 0, 0.9)) invert(0); 
     }
     .button-group {
         display: flex;
@@ -232,6 +235,8 @@
         gap: 1.5rem;
         margin-top: 2rem;
         flex-wrap: wrap;
+        z-index: 20; /* Asegurar que los botones estén por encima de todo */
+        position: relative;
     }
     .close, .reserve-btn {
       background:transparent;
@@ -252,51 +257,45 @@
       position:absolute;
       inset:0;
       pointer-events:none;
+      overflow: hidden;
     }
     .symbol{
       position:absolute;
       color:var(--red);
       opacity:.4;
-      font-size:3rem; /* Símbolos coreanos más grandes */
-      animation:float 10s linear infinite; /* Animación más rápida para notar el movimiento */
+      font-size:3rem; 
+      animation:float 10s linear infinite; 
     }
     @keyframes float{
       from{transform:translateY(100vh) rotate(0deg)}
       to{transform:translateY(-120vh) rotate(360deg)}
     }
     
-    /* ESTILOS DE LA MARQUESINA DE FOTOS (VERTICAL) */
-    .image-marquee {
-        width: 100%;
-        height: 250px;
-        margin: 2rem auto;
-        overflow: hidden; /* Esto es crucial para que el contenido se mueva dentro */
-        position: relative;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    .marquee-content {
-        position: absolute;
-        width: 100%;
-        display: flex;
-        flex-direction: column; 
-        /* Asegurar que el contenido duplicado sea el doble de la altura total */
-        height: auto; 
-        animation: marquee-scroll-vertical 30s linear infinite; 
-    }
-    .marquee-content img {
+    /* CARRUSEL DE FOTOS (FADE EFFECT) */
+    .photo-carousel {
         width: 100%;
         height: 250px; 
-        margin-bottom: 10px; 
-        border-radius: 4px;
-        object-fit: cover;
-        opacity: 0.95;
-        transition: opacity 0.3s;
-        flex-shrink: 0; 
+        margin: 2rem auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.5);
     }
-    .marquee-content img:hover {
-        opacity: 1;
+    .carousel-image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0; /* Inicialmente ocultas */
+        transition: opacity 1s ease-in-out; /* Transición de desvanecimiento */
+    }
+    .carousel-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .carousel-image.active {
+        opacity: 1; /* La imagen activa se muestra */
     }
 
 
@@ -309,8 +308,14 @@
         .card { padding: 2rem 1rem; max-width: 90%; }
         .card-logo-restaurante { max-width: 250px; }
         .card h2 { font-size: 1.5rem; }
-        .image-marquee { height: 180px; } 
-        .marquee-content img { height: 180px; }
+        .photo-carousel { height: 180px; }
+
+        /* Ajuste para símbolos coreanos en móvil */
+        .symbol {
+            font-size: 1.5rem; /* Más pequeños */
+            opacity: 0.2; /* Menos notorios */
+        }
+
         .button-group { gap: 1rem; }
     }
   </style>
@@ -341,14 +346,26 @@
       
       <img src="Asiatic Gastropub.jpg" alt="Asiatic Gastropub" class="card-logo-restaurante" />
 
-      <div class="image-marquee">
-          <div class="marquee-content" id="marqueeContent">
+      <div class="photo-carousel" id="photoCarousel">
+          <div class="carousel-image active">
               <img src="marquesina1.png" alt="Foto 1">
+          </div>
+          <div class="carousel-image">
               <img src="marquesina2.png" alt="Foto 2">
+          </div>
+          <div class="carousel-image">
               <img src="marquesina3.png" alt="Foto 3">
+          </div>
+          <div class="carousel-image">
               <img src="marquesina4.png" alt="Foto 4">
+          </div>
+          <div class="carousel-image">
               <img src="marquesina5.png" alt="Foto 5">
+          </div>
+          <div class="carousel-image">
               <img src="marquesina6.png" alt="Foto 6">
+          </div>
+          <div class="carousel-image">
               <img src="marquesina7.png" alt="Foto 7">
           </div>
       </div>
@@ -377,25 +394,21 @@
   </div>
 
   <script>
-    // Variable para asegurar que la marquesina solo se duplique una vez
-    let marqueeSetupComplete = false;
-    
+    // ----------------------
+    // CONTROL DE SÍMBOLOS Y MODAL
+    // ----------------------
     function openInvite(){
       document.getElementById('invitation').style.display='flex';
       createSymbols();
-      // Solo inicializamos la marquesina si no se ha hecho antes
-      if (!marqueeSetupComplete) {
-          setupMarquee();
-          marqueeSetupComplete = true;
-      }
+      startCarousel(); // Iniciar el carrusel al abrir la invitación
     }
     function closeInvite(){
       document.getElementById('invitation').style.display='none';
       document.getElementById('symbols').innerHTML=''; 
+      stopCarousel(); // Detener el carrusel al cerrar
     }
 
     function createSymbols(){
-      // Símbolos más grandes se manejan con font-size en CSS (.symbol)
       const icons=['韓','和','力','夢','福','龍','虎','★','✶','✨']; 
       const container=document.getElementById('symbols');
       container.innerHTML = ''; 
@@ -406,38 +419,35 @@
         s.textContent=icons[Math.floor(Math.random()*icons.length)];
         s.style.left=Math.random()*100+'%';
         s.style.animationDuration=(8+Math.random()*10)+'s';
-        s.style.fontSize=(25+Math.random()*35)+'px'; // Aumentamos el tamaño aún más aquí
+        s.style.fontSize=(25+Math.random()*35)+'px'; 
         container.appendChild(s);
       }
     }
 
-    // Función crucial para duplicar el contenido de la marquesina y lograr el loop infinito
-    function setupMarquee() {
-        const marquee = document.getElementById('marqueeContent');
-        // Clonar el contenido de las imágenes
-        const content = marquee.innerHTML;
-        // Duplicar el contenido
-        marquee.innerHTML = content + content;
+    // ----------------------
+    // CONTROL DEL CARRUSEL DE FOTOS (FADE)
+    // ----------------------
+    const images = document.querySelectorAll('.carousel-image');
+    let currentImageIndex = 0;
+    let carouselInterval;
+
+    function showImage(index) {
+        // Remover 'active' de todas las imágenes
+        images.forEach(img => img.classList.remove('active'));
+        // Agregar 'active' a la imagen actual
+        images[index].classList.add('active');
     }
 
+    function nextImage() {
+        // Mover al siguiente índice, si es el último, vuelve al inicio
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        showImage(currentImageIndex);
+    }
 
-    // JS para generar elementos festivos iniciales (copos, campanas, confeti)
-    document.addEventListener('DOMContentLoaded', () => {
-        const festiveContainer = document.getElementById('festiveElements');
-        const elements = ['❄️', '🔔', '✨', '🌟', '🎄', '🎁']; 
-        const classes = ['snow', 'bell', 'confetti'];
-
-        for (let i = 0; i < 60; i++) {
-            const el = document.createElement('div');
-            el.className = `festive-element ${classes[Math.floor(Math.random() * classes.length)]}`;
-            el.textContent = elements[Math.floor(Math.random() * elements.length)];
-            el.style.left = Math.random() * 100 + 'vw'; 
-            el.style.animationDelay = Math.random() * -10 + 's'; 
-            el.style.top = 100 + Math.random() * 20 + 'vh'; 
-            festiveContainer.appendChild(el);
-        }
-    });
-  </script>
-
-</body>
-</html>
+    function startCarousel() {
+        // Asegurarse de que solo haya un intervalo corriendo
+        stopCarousel(); 
+        // Mostrar la primera imagen (por si se ha cerrado antes)
+        showImage(0); 
+        // 1000ms = 1 segundo
+        carouselInterval = setInterval(next
