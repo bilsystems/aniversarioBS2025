@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aniversario Bilsystems – 2026</title>
+  <title>Celebremos nuestro 5to Aniversario</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -22,7 +22,7 @@
       /* Animación para el efecto de brillo en textos */
       @keyframes text-shine {
         0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
-        50% { text-shadow: 0 0 20px var(--soft-gold), 0 0 30px rgba(255, 215, 0, 0.4); }
+        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 35px rgba(255, 215, 0, 0.5); }
         100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
       }
 
@@ -33,6 +33,12 @@
         50% { transform: translateY(-40vh) translateX(-10vw) rotate(180deg); opacity: 0.8; }
         75% { transform: translateY(-60vh) translateX(5vw) rotate(270deg); opacity: 0.5; }
         100% { transform: translateY(-80vh) translateX(-5vw) rotate(360deg); opacity: 0.2; }
+      }
+      
+      /* Animación de la marquesina */
+      @keyframes marquee-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Se desplaza la mitad para el loop */
       }
     }
     *{box-sizing:border-box}
@@ -99,17 +105,18 @@
       gap:2.5rem;
       flex-wrap:wrap;
       justify-content:center;
-      margin-bottom:3rem;
+      margin-bottom:2rem; /* Menos margen porque el logo es más grande */
       position: relative;
     }
     .logos img{
-      max-height:80px;
-      filter:drop-shadow(0 8px 20px rgba(0,0,0,.6)) invert(0.9);
+      max-height:120px; /* Logo más grande */
+      /* Se elimina el 'invert(0.9)' para respetar los colores originales */
+      filter:drop-shadow(0 8px 30px rgba(255, 215, 0, 0.4));
       transition:transform 0.3s ease;
       z-index: 5;
     }
     .logos img:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
     h1{
       font-family:'Playfair Display',serif;
@@ -176,7 +183,7 @@
       background-size: 150px 150px;
     }
     .card{
-      max-width:500px;
+      max-width:550px; /* Un poco más ancho para la galería */
       background:#1a1a1a;
       padding:3rem 2rem;
       border-radius:12px;
@@ -185,6 +192,7 @@
       position:relative;
       z-index:10;
       animation: fadeInScale 0.7s ease-out forwards;
+      overflow: hidden; /* Para contener la marquesina */
     }
     /* Animación para que la tarjeta aparezca suavemente */
     @keyframes fadeInScale {
@@ -204,7 +212,7 @@
       margin-bottom:1.5rem;
     }
     .place{
-      margin:2rem 0;
+      margin:2rem 0 1rem; /* Margen antes de los botones */
       padding:1rem 0;
       border-top:1px solid rgba(212,175,55,.3);
       border-bottom:1px solid rgba(212,175,55,.3);
@@ -213,13 +221,18 @@
       color: #fff;
     }
     .card-logo-restaurante {
-        max-width: 250px;
+        max-width: 280px; /* Logo del restaurante un poco más grande */
         margin-bottom: 2rem;
-        /* Asegurar que el logo mantenga sus colores originales */
         filter: drop-shadow(0 0 10px rgba(255,200,0,0.5)) invert(0); 
     }
-    .close{
-      margin-top:2rem;
+    .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+    .close, .reserve-btn {
       background:transparent;
       border:1px solid var(--gold);
       color:var(--gold);
@@ -228,8 +241,10 @@
       cursor:pointer;
       font-size: 1rem;
       transition: background 0.3s;
+      text-decoration: none; /* Para el link */
+      text-align: center;
     }
-    .close:hover {
+    .close:hover, .reserve-btn:hover {
         background: rgba(212,175,55,.1);
     }
     .symbols{
@@ -248,21 +263,48 @@
       from{transform:translateY(100vh) rotate(0deg)}
       to{transform:translateY(-120vh) rotate(360deg)}
     }
+    
+    /* ESTILOS DE LA MARQUESINA DE FOTOS */
+    .image-marquee {
+        width: 100%;
+        margin: 2rem 0;
+        overflow: hidden;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.05); /* Fondo semitransparente */
+        padding: 0.5rem 0;
+        border-radius: 8px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    .marquee-content {
+        display: inline-block;
+        animation: marquee-scroll 25s linear infinite; /* Animación de desplazamiento */
+        padding-right: 100%; /* Espacio para el loop */
+    }
+    .marquee-content img {
+        height: 100px; /* Altura de las imágenes */
+        margin: 0 10px;
+        border-radius: 4px;
+        object-fit: cover;
+        opacity: 0.9;
+        transition: opacity 0.3s;
+    }
+    .marquee-content img:hover {
+        opacity: 1;
+    }
+
 
     /* Media queries para responsividad */
     @media (max-width: 768px) {
         h1 { font-size: 2.5rem; }
         .subtitle { font-size: 1rem; }
-        .logos { gap: 1.5rem; margin-bottom: 2rem; }
-        .logos img { max-height: 60px; }
+        .logos { margin-bottom: 2rem; }
+        .logos img { max-height: 90px; }
         .btn { padding: 0.9rem 2.5rem; font-size: 1rem; }
-        .card { padding: 2rem 1rem; }
+        .card { padding: 2rem 1rem; max-width: 90%; }
         .card h2 { font-size: 1.5rem; }
-    }
-    @media (max-width: 480px) {
-        h1 { font-size: 2rem; }
-        .subtitle { font-size: 0.9rem; }
-        .logos img { max-height: 50px; }
+        .image-marquee { margin: 1rem 0; }
+        .marquee-content img { height: 70px; }
+        .button-group { gap: 1rem; }
     }
   </style>
 </head>
@@ -277,7 +319,7 @@
       <img src="LOGO BILSYSTEMS_SOLO LOGO.png" alt="Logo Bilsystems">
     </div>
 
-    <h1>Aniversario Bilsystems</h1>
+    <h1>Celebremos nuestro 5to Aniversario</h1>
     <p class="subtitle">
       Un encuentro para honrar cada esfuerzo, cada desafío superado y cada momento vivido juntos.
       Celebramos la experiencia compartida y encendemos nuevas fuerzas para avanzar con visión, gratitud y propósito hacia un próspero 2026.
@@ -290,8 +332,20 @@
     <div class="symbols" id="symbols"></div>
     <div class="card">
       
-      <img src="Asiatic Gastropub.png" alt="Asiatic Gastropub" class="card-logo-restaurante" />
+      <img src="Asiatic Gastropub.jpg" alt="Asiatic Gastropub" class="card-logo-restaurante" />
 
+      <div class="image-marquee">
+          <div class="marquee-content" id="marqueeContent">
+              <img src="marquesina1.png" alt="Foto 1">
+              <img src="marquesina2.png" alt="Foto 2">
+              <img src="marquesina3.png" alt="Foto 3">
+              <img src="marquesina4.png" alt="Foto 4">
+              <img src="marquesina5.png" alt="Foto 5">
+              <img src="marquesina6.png" alt="Foto 6">
+              <img src="marquesina7.png" alt="Foto 7">
+          </div>
+      </div>
+      
       <h2>Gracias por ser parte</h2>
       <p>
         Hoy celebramos más que un aniversario. Celebramos la disciplina, la constancia y la pasión que nos han traído hasta aquí.
@@ -306,7 +360,12 @@
         Calle 82 #53 - 57, Barranquilla
       </div>
 
-      <button class="close" onclick="closeInvite()">Cerrar</button>
+      <div class="button-group">
+          <a href="https://sites.google.com/view/asiangastropub/menu" target="_blank" class="reserve-btn">Reserva tu Plato</a>
+          
+          <button class="close" onclick="closeInvite()">Cerrar</button>
+      </div>
+      
     </div>
   </div>
 
@@ -314,6 +373,8 @@
     function openInvite(){
       document.getElementById('invitation').style.display='flex';
       createSymbols();
+      // Inicializar la marquesina
+      setupMarquee();
     }
     function closeInvite(){
       document.getElementById('invitation').style.display='none';
@@ -336,12 +397,20 @@
       }
     }
 
+    // Función para duplicar el contenido de la marquesina (para loop infinito)
+    function setupMarquee() {
+        const marquee = document.getElementById('marqueeContent');
+        // Clonar el contenido de las imágenes
+        const content = marquee.innerHTML;
+        // Duplicar el contenido
+        marquee.innerHTML = content + content;
+    }
+
+
     // JS para generar elementos festivos iniciales (copos, campanas, confeti)
     document.addEventListener('DOMContentLoaded', () => {
         const festiveContainer = document.getElementById('festiveElements');
-        // Elementos navideños/festivos
         const elements = ['❄️', '🔔', '✨', '🌟', '🎄', '🎁']; 
-        // Clases para aplicar diferentes estilos y animaciones
         const classes = ['snow', 'bell', 'confetti'];
 
         for (let i = 0; i < 60; i++) {
