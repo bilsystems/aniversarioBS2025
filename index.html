@@ -1,104 +1,253 @@
 <!DOCTYPE html>
-border-top:1px solid rgba(212,175,55,.3);
-font-weight:600;
-}
-.close{
-margin-top:2rem;
-background:transparent;
-border:1px solid var(--gold);
-color:var(--gold);
-padding:.7rem 2rem;
-border-radius:30px;
-cursor:pointer;
-}
-.symbols{
-position:absolute;
-inset:0;
-pointer-events:none;
-}
-.symbol{
-position:absolute;
-color:var(--red);
-opacity:.4;
-font-size:2rem;
-animation:float 12s linear infinite;
-}
-@keyframes float{
-from{transform:translateY(100vh) rotate(0deg)}
-to{transform:translateY(-120vh) rotate(360deg)}
-}
-</style>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aniversario Bilsystems – 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --gold:#d4af37;
+      --black:#0f0f0f;
+      --red:#b11226;
+      @keyframes fire {
+        0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.8; }
+        50% { opacity: 1; }
+        100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.8; }
+      }
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:radial-gradient(circle at top,var(--black),#000);
+      color:#fff;
+      overflow-x:hidden;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .hero{
+      flex-grow:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:2rem;
+    }
+    .logos{
+      display:flex;
+      gap:2.5rem;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-bottom:3rem;
+    }
+    .logos img{
+      max-height:80px;
+      /* Invertir para que los logos oscuros resalten sobre el fondo */
+      filter:drop-shadow(0 8px 20px rgba(0,0,0,.6)) invert(0.9);
+      transition:transform 0.3s ease;
+    }
+    .logos img:hover {
+        transform: scale(1.1);
+    }
+    h1{
+      font-family:'Playfair Display',serif;
+      color:var(--gold);
+      font-size:3.5rem;
+      margin:.5rem 0;
+      letter-spacing:3px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
+    .subtitle{
+      opacity:.95;
+      max-width:800px;
+      font-size:1.2rem;
+      margin-bottom:3rem;
+    }
+    .btn{
+      position:relative;
+      background:linear-gradient(135deg,#ffb347,#ffcc33);
+      color:var(--black);
+      font-weight:700;
+      padding:1.1rem 3rem;
+      border:none;
+      border-radius:40px;
+      font-size:1.2rem;
+      cursor:pointer;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(255,140,0,.5);
+      transition:transform .3s, box-shadow .3s;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    .btn::before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:250%;
+      height:250%;
+      background:radial-gradient(circle at center, rgba(255,200,0,.9), rgba(255,80,0,.7), transparent 60%);
+      animation:fire 3.5s linear infinite;
+      transform: translate(-50%, -50%);
+      filter:blur(10px);
+      z-index:1;
+    }
+    .btn span{position:relative;z-index:2}
+    .btn:hover{
+      transform:scale(1.05);
+      box-shadow:0 20px 50px rgba(255,140,0,.7);
+    }
+    /* INICIO DE CÓDIGO FALTANTE: Estilos de la Invitación */
+    .invitation{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.95);
+      display:none; /* Oculto por defecto, JS lo muestra */
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+      padding:1rem;
+    }
+    .card{
+      max-width:500px;
+      background:#1a1a1a;
+      padding:3rem 2rem;
+      border-radius:12px;
+      box-shadow:0 20px 60px rgba(0,0,0,.8);
+      text-align:center;
+      position:relative;
+      z-index:10;
+    }
+    .card h2{
+      font-family:'Playfair Display',serif;
+      color:var(--gold);
+      font-size:2rem;
+      margin-bottom:1.5rem;
+    }
+    .card p{
+      line-height:1.7;
+      opacity:.9;
+      margin-bottom:1.5rem;
+    }
+    .place{
+      margin:2rem 0;
+      padding:1rem 0;
+      border-top:1px solid rgba(212,175,55,.3);
+      border-bottom:1px solid rgba(212,175,55,.3);
+      font-weight:600;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .close{
+      margin-top:2rem;
+      background:transparent;
+      border:1px solid var(--gold);
+      color:var(--gold);
+      padding:.7rem 2rem;
+      border-radius:30px;
+      cursor:pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .close:hover {
+        background: rgba(212,175,55,.1);
+    }
+    /* FIN DE CÓDIGO FALTANTE */
+    
+    .symbols{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+    .symbol{
+      position:absolute;
+      color:var(--red);
+      opacity:.4;
+      font-size:2rem;
+      animation:float 12s linear infinite;
+    }
+    @keyframes float{
+      from{transform:translateY(100vh) rotate(0deg)}
+      to{transform:translateY(-120vh) rotate(360deg)}
+    }
+  </style>
 </head>
 <body>
 
 
 <section class="hero">
-<div class="logos">
-<!-- Reemplaza src por los logos reales -->
-<img src="LOGO BILSYSTEMS_SOLO LOGO.png" alt="Bilsystems" />
-<img src="Asiatic Gastropub.png" alt="Asiatic Gastropub" />
-</div>
+  <div class="logos">
+    <img src="LOGO BILSYSTEMS_SOLO LOGO.PNG" alt="Bilsystems" />
+    <img src="Asiatic Gastropub.png" alt="Asiatic Gastropub" />
+  </div>
 
 
-<h1>Aniversario Bilsystems</h1>
-<p class="subtitle">
-Un encuentro para honrar cada esfuerzo, cada desafío superado y cada momento vivido juntos.
-Celebramos la experiencia compartida y encendemos nuevas fuerzas para avanzar con visión, gratitud y propósito hacia un próspero 2026.
-</p>
+  <h1>Aniversario Bilsystems</h1>
+  <p class="subtitle">
+    Un encuentro para honrar cada esfuerzo, cada desafío superado y cada momento vivido juntos.
+    Celebramos la experiencia compartida y encendemos nuevas fuerzas para avanzar con visión, gratitud y propósito hacia un próspero 2026.
+  </p>
 
 
-<button class="btn" onclick="openInvite()"><span>Ver Invitación</span></button>
+  <button class="btn" onclick="openInvite()"><span>Ver Invitación</span></button>
 </section>
 
 
 <div class="invitation" id="invitation">
-<div class="symbols" id="symbols"></div>
-<div class="card">
-<h2>Gracias por ser parte</h2>
-<p>
-Hoy celebramos más que un aniversario. Celebramos la disciplina, la constancia y la pasión que nos han traído hasta aquí.
-Cada paso recorrido dejó aprendizaje, cada reto fortaleció el equipo y cada logro nos recuerda que juntos somos más fuertes.
-</p>
-<p>
-Que esta experiencia compartida renueve nuestras energías, inspire nuevos sueños y nos impulse a construir un <b>2026 lleno de prosperidad, visión y propósito</b>.
-</p>
+  <div class="symbols" id="symbols"></div>
+  <div class="card">
+    <h2>Gracias por ser parte</h2>
+    <p>
+      Hoy celebramos más que un aniversario. Celebramos la disciplina, la constancia y la pasión que nos han traído hasta aquí.
+      Cada paso recorrido dejó aprendizaje, cada reto fortaleció el equipo y cada logro nos recuerda que juntos somos más fuertes.
+    </p>
+    <p>
+      Que esta experiencia compartida renueve nuestras energías, inspire nuevos sueños y nos impulse a construir un <b>2026 lleno de prosperidad, visión y propósito</b>.
+    </p>
 
 
-<div class="place">
-<b>Asiatic Gastropub – Korean BBQ</b><br>
-Calle 82 #53 - 57, Barranquilla
-</div>
+    <div class="place">
+      <b>Asiatic Gastropub – Korean BBQ</b><br>
+      Calle 82 #53 - 57, Barranquilla
+    </div>
 
 
-<button class="close" onclick="closeInvite()">Cerrar</button>
-</div>
+    <button class="close" onclick="closeInvite()">Cerrar</button>
+  </div>
 </div>
 
 
 <script>
-function openInvite(){
-document.getElementById('invitation').style.display='flex';
-createSymbols();
-}
-function closeInvite(){
-document.getElementById('invitation').style.display='none';
-document.getElementById('symbols').innerHTML='';
-}
-function createSymbols(){
-const icons=['韓','和','力','夢','福','龍','虎','★','✶'];
-const container=document.getElementById('symbols');
-for(let i=0;i<30;i++){
-const s=document.createElement('div');
-s.className='symbol';
-s.textContent=icons[Math.floor(Math.random()*icons.length)];
-s.style.left=Math.random()*100+'%';
-s.style.animationDuration=(8+Math.random()*10)+'s';
-s.style.fontSize=(18+Math.random()*30)+'px';
-container.appendChild(s);
-}
-}
+  function openInvite(){
+    document.getElementById('invitation').style.display='flex';
+    createSymbols();
+  }
+  function closeInvite(){
+    document.getElementById('invitation').style.display='none';
+    document.getElementById('symbols').innerHTML='';
+  }
+  function createSymbols(){
+    // Iconos de la cultura asiática y símbolos festivos
+    const icons=['韓','和','力','夢','福','龍','虎','★','✶','✨']; 
+    const container=document.getElementById('symbols');
+    
+    // Limpiar símbolos previos (importante si se abre varias veces)
+    container.innerHTML = ''; 
+
+    for(let i=0;i<40;i++){ // Aumentado a 40 símbolos
+      const s=document.createElement('div');
+      s.className='symbol';
+      s.textContent=icons[Math.floor(Math.random()*icons.length)];
+      s.style.left=Math.random()*100+'%';
+      s.style.animationDuration=(8+Math.random()*10)+'s';
+      s.style.fontSize=(18+Math.random()*30)+'px';
+      container.appendChild(s);
+    }
+  }
 </script>
-
-
 </body>
 </html>
