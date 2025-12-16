@@ -22,7 +22,7 @@
       /* Animación para el efecto de brillo en textos */
       @keyframes text-shine {
         0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
-        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 35px rgba(255, 215, 0, 0.5); }
+        50% { text-shadow: 0 0 25px var(--soft-gold), 0 0 40px rgba(255, 215, 0, 0.6); }
         100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
       }
 
@@ -35,10 +35,11 @@
         100% { transform: translateY(-80vh) translateX(-5vw) rotate(360deg); opacity: 0.2; }
       }
       
-      /* Animación de la marquesina */
-      @keyframes marquee-scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); } /* Se desplaza la mitad para el loop */
+      /* Animación de la marquesina vertical */
+      @keyframes marquee-scroll-vertical {
+        0% { transform: translateY(0); }
+        /* Se desplaza 50% de la altura total (duplicada) para el loop */
+        100% { transform: translateY(-50%); } 
       }
     }
     *{box-sizing:border-box}
@@ -105,12 +106,11 @@
       gap:2.5rem;
       flex-wrap:wrap;
       justify-content:center;
-      margin-bottom:2rem; /* Menos margen porque el logo es más grande */
+      margin-bottom:2rem;
       position: relative;
     }
     .logos img{
-      max-height:120px; /* Logo más grande */
-      /* Se elimina el 'invert(0.9)' para respetar los colores originales */
+      max-height:120px;
       filter:drop-shadow(0 8px 30px rgba(255, 215, 0, 0.4));
       transition:transform 0.3s ease;
       z-index: 5;
@@ -183,7 +183,7 @@
       background-size: 150px 150px;
     }
     .card{
-      max-width:550px; /* Un poco más ancho para la galería */
+      max-width:550px;
       background:#1a1a1a;
       padding:3rem 2rem;
       border-radius:12px;
@@ -192,9 +192,8 @@
       position:relative;
       z-index:10;
       animation: fadeInScale 0.7s ease-out forwards;
-      overflow: hidden; /* Para contener la marquesina */
+      overflow: hidden; 
     }
-    /* Animación para que la tarjeta aparezca suavemente */
     @keyframes fadeInScale {
         from { opacity: 0; transform: scale(0.8); }
         to { opacity: 1; transform: scale(1); }
@@ -212,7 +211,7 @@
       margin-bottom:1.5rem;
     }
     .place{
-      margin:2rem 0 1rem; /* Margen antes de los botones */
+      margin:2rem 0 1rem;
       padding:1rem 0;
       border-top:1px solid rgba(212,175,55,.3);
       border-bottom:1px solid rgba(212,175,55,.3);
@@ -221,9 +220,11 @@
       color: #fff;
     }
     .card-logo-restaurante {
-        max-width: 280px; /* Logo del restaurante un poco más grande */
+        max-width: 320px; /* Logo más grande */
+        height: auto;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 0 10px rgba(255,200,0,0.5)) invert(0); 
+        /* Resplandor más intenso para resaltar */
+        filter: drop-shadow(0 0 25px rgba(255, 200, 0, 0.8)) invert(0); 
     }
     .button-group {
         display: flex;
@@ -241,7 +242,7 @@
       cursor:pointer;
       font-size: 1rem;
       transition: background 0.3s;
-      text-decoration: none; /* Para el link */
+      text-decoration: none;
       text-align: center;
     }
     .close:hover, .reserve-btn:hover {
@@ -264,29 +265,33 @@
       to{transform:translateY(-120vh) rotate(360deg)}
     }
     
-    /* ESTILOS DE LA MARQUESINA DE FOTOS */
+    /* ESTILOS DE LA MARQUESINA DE FOTOS (VERTICAL) */
     .image-marquee {
         width: 100%;
-        margin: 2rem 0;
+        height: 250px; /* Altura del contenedor de la marquesina */
+        margin: 2rem auto;
         overflow: hidden;
-        white-space: nowrap;
-        background: rgba(255, 255, 255, 0.05); /* Fondo semitransparente */
-        padding: 0.5rem 0;
+        position: relative;
+        background: rgba(255, 255, 255, 0.05);
         border-radius: 8px;
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
     }
     .marquee-content {
-        display: inline-block;
-        animation: marquee-scroll 25s linear infinite; /* Animación de desplazamiento */
-        padding-right: 100%; /* Espacio para el loop */
+        position: absolute;
+        width: 100%;
+        display: flex;
+        flex-direction: column; /* Apilar las imágenes verticalmente */
+        animation: marquee-scroll-vertical 30s linear infinite; /* Animación vertical */
     }
     .marquee-content img {
-        height: 100px; /* Altura de las imágenes */
-        margin: 0 10px;
+        width: 100%;
+        height: 250px; /* Tamaño más grande para las fotos */
+        margin-bottom: 10px; /* Espacio entre fotos */
         border-radius: 4px;
         object-fit: cover;
-        opacity: 0.9;
+        opacity: 0.95;
         transition: opacity 0.3s;
+        flex-shrink: 0; /* Evita que se encojan */
     }
     .marquee-content img:hover {
         opacity: 1;
@@ -297,13 +302,13 @@
     @media (max-width: 768px) {
         h1 { font-size: 2.5rem; }
         .subtitle { font-size: 1rem; }
-        .logos { margin-bottom: 2rem; }
         .logos img { max-height: 90px; }
         .btn { padding: 0.9rem 2.5rem; font-size: 1rem; }
         .card { padding: 2rem 1rem; max-width: 90%; }
+        .card-logo-restaurante { max-width: 250px; }
         .card h2 { font-size: 1.5rem; }
-        .image-marquee { margin: 1rem 0; }
-        .marquee-content img { height: 70px; }
+        .image-marquee { height: 180px; } /* Menos altura en móvil */
+        .marquee-content img { height: 180px; }
         .button-group { gap: 1rem; }
     }
   </style>
@@ -422,6 +427,12 @@
             el.style.top = 100 + Math.random() * 20 + 'vh'; 
             festiveContainer.appendChild(el);
         }
+        
+        // Ejecutar setupMarquee inmediatamente en el DOMContentLoaded
+        // para que las fotos se dupliquen antes de que se abra el modal
+        // y el CSS pueda calcular la animación correctamente.
+        // Opcional, pero previene fallos si el usuario abre el modal rápido.
+        // Note: Se moverá la inicialización de setupMarquee al openInvite() para asegurar que la duplicación se haga solo una vez al abrir.
     });
   </script>
 
