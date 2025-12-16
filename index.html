@@ -10,7 +10,7 @@
       --gold:#d4af37;
       --black:#0f0f0f;
       --red:#b11226;
-      --soft-gold: #e0b84c; /* Nuevo color para brillos */
+      --soft-gold: #e0b84c; 
 
       /* Animación para el botón con efecto de fuego */
       @keyframes fire {
@@ -26,7 +26,7 @@
         100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
       }
 
-      /* Animación para confeti, campanas y nieve */
+      /* Animación para confeti, campanas y nieve (efectos navideños) */
       @keyframes float-festive {
         0% { transform: translateY(0vh) translateX(0) rotate(0deg); opacity: 0.2; }
         25% { transform: translateY(-20vh) translateX(10vw) rotate(90deg); opacity: 0.5; }
@@ -54,8 +54,8 @@
       justify-content:center;
       text-align:center;
       padding:2rem;
-      position: relative; /* Necesario para los elementos flotantes */
-      overflow: hidden; /* Para que los elementos no salgan fuera */
+      position: relative;
+      overflow: hidden;
     }
     
     /* Contenedor para elementos navideños */
@@ -70,14 +70,14 @@
     }
     .festive-element {
         position: absolute;
-        color: var(--gold); /* Color base para campanas y confeti */
+        color: var(--gold);
         font-size: 1.5rem;
         opacity: 0;
         animation: float-festive 20s linear infinite;
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
     .festive-element.snow {
-        color: #e0f2f7; /* Blanco para nieve */
+        color: #e0f2f7;
         font-size: 1rem;
         animation-duration: 15s;
         text-shadow: none;
@@ -88,7 +88,7 @@
         animation-duration: 25s;
     }
     .festive-element.confetti {
-        color: #ff69b4; /* Rosa para confeti */
+        color: #ff69b4;
         font-size: 1.2rem;
         animation-duration: 18s;
     }
@@ -100,13 +100,13 @@
       flex-wrap:wrap;
       justify-content:center;
       margin-bottom:3rem;
-      position: relative; /* Para posicionar el logo de Bilsystems dentro */
+      position: relative;
     }
     .logos img{
       max-height:80px;
       filter:drop-shadow(0 8px 20px rgba(0,0,0,.6)) invert(0.9);
       transition:transform 0.3s ease;
-      z-index: 5; /* Asegurar que el logo esté por encima de algunos elementos festivos */
+      z-index: 5;
     }
     .logos img:hover {
         transform: scale(1.1);
@@ -118,14 +118,14 @@
       margin:.5rem 0;
       letter-spacing:3px;
       text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-      animation: text-shine 3s ease-in-out infinite; /* Animación de brillo */
+      animation: text-shine 3s ease-in-out infinite;
     }
     .subtitle{
       opacity:.95;
       max-width:800px;
       font-size:1.2rem;
       margin-bottom:3rem;
-      animation: text-shine 4s ease-in-out infinite; /* Animación de brillo */
+      animation: text-shine 4s ease-in-out infinite;
     }
     .btn{
       position:relative;
@@ -172,7 +172,7 @@
       justify-content:center;
       z-index:1000;
       padding:1rem;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"><rect fill="%230f0f0f" width="100%" height="100%"/><g opacity="0.1"><circle fill="%23d4af37" cx="25" cy="25" r="10"/><circle fill="%23d4af37" cx="75" cy="75" r="10"/><circle fill="%23d4af37" cx="25" cy="75" r="10"/><circle fill="%23d4af37" cx="75" cy="25" r="10"/></g></svg>'); /* Patrón sutil */
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"><rect fill="%230f0f0f" width="100%" height="100%"/><g opacity="0.1"><circle fill="%23d4af37" cx="25" cy="25" r="10"/><circle fill="%23d4af37" cx="75" cy="75" r="10"/><circle fill="%23d4af37" cx="25" cy="75" r="10"/><circle fill="%23d4af37" cx="75" cy="25" r="10"/></g></svg>');
       background-size: 150px 150px;
     }
     .card{
@@ -196,7 +196,7 @@
       color:var(--gold);
       font-size:2rem;
       margin-bottom:1.5rem;
-      animation: text-shine 3.5s ease-in-out infinite; /* Animación de brillo */
+      animation: text-shine 3.5s ease-in-out infinite;
     }
     .card p{
       line-height:1.7;
@@ -215,7 +215,8 @@
     .card-logo-restaurante {
         max-width: 250px;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 0 10px rgba(255,200,0,0.5)); /* Resplandor al logo del restaurante */
+        /* Asegurar que el logo mantenga sus colores originales */
+        filter: drop-shadow(0 0 10px rgba(255,200,0,0.5)) invert(0); 
     }
     .close{
       margin-top:2rem;
@@ -268,10 +269,12 @@
 <body>
 
   <main class="hero">
+    
     <div class="festive-elements" id="festiveElements"></div>
 
     <div class="logos">
-      <img src="LOGO BILSYSTEMS_SOLO LOGO.PNG" alt="Logo Bilsystems">
+      
+      <img src="LOGO BILSYSTEMS_SOLO LOGO.png" alt="Logo Bilsystems">
     </div>
 
     <h1>Aniversario Bilsystems</h1>
@@ -286,6 +289,7 @@
   <div class="invitation" id="invitation">
     <div class="symbols" id="symbols"></div>
     <div class="card">
+      
       <img src="Asiatic Gastropub.png" alt="Asiatic Gastropub" class="card-logo-restaurante" />
 
       <h2>Gracias por ser parte</h2>
@@ -313,15 +317,15 @@
     }
     function closeInvite(){
       document.getElementById('invitation').style.display='none';
-      document.getElementById('symbols').innerHTML=''; // Limpiar símbolos al cerrar
+      document.getElementById('symbols').innerHTML=''; 
     }
 
     function createSymbols(){
-      const icons=['韓','和','力','夢','福','龍','虎','★','✶','✨']; // Iconos más variados
+      const icons=['韓','和','力','夢','福','龍','虎','★','✶','✨']; 
       const container=document.getElementById('symbols');
-      container.innerHTML = ''; // Limpiar símbolos previos al abrir
+      container.innerHTML = ''; 
 
-      for(let i=0;i<40;i++){ // Más símbolos para mayor impacto
+      for(let i=0;i<40;i++){
         const s=document.createElement('div');
         s.className='symbol';
         s.textContent=icons[Math.floor(Math.random()*icons.length)];
@@ -335,16 +339,18 @@
     // JS para generar elementos festivos iniciales (copos, campanas, confeti)
     document.addEventListener('DOMContentLoaded', () => {
         const festiveContainer = document.getElementById('festiveElements');
-        const elements = ['❄️', '🔔', '✨', '🌟', '🎄', '🎁']; // Nuevos elementos festivos
+        // Elementos navideños/festivos
+        const elements = ['❄️', '🔔', '✨', '🌟', '🎄', '🎁']; 
+        // Clases para aplicar diferentes estilos y animaciones
         const classes = ['snow', 'bell', 'confetti'];
 
-        for (let i = 0; i < 60; i++) { // Generar 60 elementos festivos
+        for (let i = 0; i < 60; i++) {
             const el = document.createElement('div');
             el.className = `festive-element ${classes[Math.floor(Math.random() * classes.length)]}`;
             el.textContent = elements[Math.floor(Math.random() * elements.length)];
-            el.style.left = Math.random() * 100 + 'vw'; // Posición aleatoria en el ancho de la vista
-            el.style.animationDelay = Math.random() * -10 + 's'; // Retraso aleatorio para que empiecen en diferentes momentos
-            el.style.top = 100 + Math.random() * 20 + 'vh'; // Empezar desde abajo o un poco fuera
+            el.style.left = Math.random() * 100 + 'vw'; 
+            el.style.animationDelay = Math.random() * -10 + 's'; 
+            el.style.top = 100 + Math.random() * 20 + 'vh'; 
             festiveContainer.appendChild(el);
         }
     });
